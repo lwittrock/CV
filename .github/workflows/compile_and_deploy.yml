@@ -22,18 +22,18 @@ jobs:
         with:
           root_file: main.tex
 
-      - name: View logs
-        run: cat main.log
-
-      - name: Move PDF
+      - name: Check pdf file
         run: |
-          mkdir build
-          mv main.pdf 'build/Academic CV - Lars Wittrock.pdf'
-      - name: Push build
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: build
-          FOLDER: build
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build: ({sha}) {msg}"
+          file main.pdf | grep -q ' PDF '
+
+      - name: Upload file to repository
+        run: |
+          git config --global user.name "lwittrock"
+          git config --global user.email "larwitt@gmx.de"
+          git add main.pdf
+          git commit -m "commit message"
+          git push
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      
+      
+    
