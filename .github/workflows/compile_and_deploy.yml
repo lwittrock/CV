@@ -28,7 +28,7 @@ jobs:
       - name: Move PDF
         run: |
           mkdir build
-          mv main.pdf 'build/CV.pdf'
+          mv main.pdf 'build/Academic CV - Lars Wittrock.pdf'
       - name: Push build
         uses: s0/git-publish-subdir-action@develop
         env:
